@@ -19,6 +19,7 @@ module.exports = createReactClass({
   render () {
     var style={
         borderRadius: 35,
+        cursor: "pointer",
         border: this.state.mouseOver?"1px solid white":undefined,
         width: 10,
         height: 10,
