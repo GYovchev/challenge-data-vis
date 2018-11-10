@@ -10,7 +10,8 @@ module.exports = createReactClass({
       data: []
     }
   },
-  injectOffsetsIntoData (data) {
+  injectOffsetsIntoData (newProps) {
+    var data = newProps.data
     var minPetalWidth = data.reduce((min, p) =>
                         p.petalWidth < min ? p.petalWidth : min, data[0].petalWidth)
     var maxPetalWidth = data.reduce((max, p) =>
@@ -22,9 +23,9 @@ module.exports = createReactClass({
     data.forEach((d, idx) => {
       d.i = idx
       d.offset = {
-        left: linmap(minPetalWidth, maxPetalWidth, 0, this.props.width, d.petalWidth),
-        top: this.props.height - linmap(
-            minPetalLength, maxPetalLength, 0, this.props.height, d.petalLength
+        left: linmap(minPetalWidth, maxPetalWidth, 0, newProps.width, d.petalWidth),
+        top: newProps.height - linmap(
+            minPetalLength, maxPetalLength, 0, newProps.height, d.petalLength
             )
       }
     })
@@ -33,7 +34,7 @@ module.exports = createReactClass({
   componentWillReceiveProps (newProps) {
     // We don't need to inject offsets if our data is empty array
     if (newProps.data.length > 0) {
-      this.injectOffsetsIntoData(Object.assign({}, newProps).data)
+      this.injectOffsetsIntoData(Object.assign({}, newProps))
     }
   },
   render () {
